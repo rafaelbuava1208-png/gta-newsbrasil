@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="GTA News Brasil: novidades de GTA 6, GTA Online e Rockstar Games.">
+<title>GTA News Brasil</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#10130f;color:#fff;font-family:Arial,sans-serif}
+header{background:#191f17;padding:22px 5%;border-bottom:2px solid #a5e65a}
+.logo{font-size:25px;font-weight:bold}
+.logo span{color:#a5e65a}
+nav{display:flex;gap:18px;flex-wrap:wrap;margin-top:15px}
+nav a{color:#ddd;text-decoration:none}
+.hero{padding:65px 6%;background:linear-gradient(120deg,#26391c,#10130f)}
+.hero h1{font-size:clamp(35px,7vw,65px);margin:10px 0}
+.hero p{color:#ddd;max-width:600px;line-height:1.6}
+button{background:#a5e65a;color:#111;border:0;padding:11px 16px;border-radius:7px;font-weight:bold;cursor:pointer}
+main{max-width:1100px;margin:auto;padding:25px 5%}
+h2{border-left:4px solid #a5e65a;padding-left:12px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.filters button{background:#252d21;color:white}
+.filters button.active{background:#a5e65a;color:#111}
+input,select{padding:12px;border-radius:7px;border:1px solid #444;background:#20251e;color:white}
+input{width:100%;margin:12px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+.card{background:#1b2119;border:1px solid #333;border-radius:12px;padding:20px}
+.card small{color:#a5e65a;font-weight:bold}
+.card p{color:#ccc;line-height:1.5}
+.card a{color:#a5e65a}
+footer{text-align:center;padding:30px;color:#aaa;border-top:1px solid #333;margin-top:40px}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">GTA NEWS <span>BRASIL</span></div>
+<nav>
+<a href="#inicio">Início</a>
+<a href="#noticias">Notícias</a>
+<a href="#sobre">Sobre</a>
+</nav>
+</header>
+
+<section class="hero" id="inicio">
+<p>O UNIVERSO GRAND THEFT AUTO</p>
+<h1>O mundo do GTA<br>em um só lugar.</h1>
+<p>Fique por dentro das novidades, atualizações e informações sobre GTA 6, GTA 5 e GTA Online.</p>
+<button onclick="document.getElementById('noticias').scrollIntoView()">Ver notícias</button>
+</section>
+
+<main id="noticias">
+<h2 id="titulo">Últimas notícias</h2>
+
+<select id="idioma" onchange="mudarIdioma()">
+<option value="pt">Português 🇧🇷</option>
+<option value="en">English 🇺🇸</option>
+<option value="es">Español 🇪🇸</option>
+</select>
+
+<input id="busca" placeholder="Pesquisar notícias..." oninput="renderizar()">
+
+<div class="filters">
+<button class="active" onclick="filtrar('Todos',this)">Todos</button>
+<button onclick="filtrar('GTA 6',this)">GTA 6</button>
+<button onclick="filtrar('GTA Online',this)">GTA Online</button>
+<button onclick="filtrar('GTA 5',this)">GTA 5</button>
+<button onclick="filtrar('Rockstar',this)">Rockstar</button>
+</div>
+
+<div class="grid" id="lista"></div>
+</main>
+
+<main id="sobre">
+<h2>Sobre o GTA News Brasil</h2>
+<p>Um projeto independente feito por fãs para acompanhar o universo GTA. Não somos afiliados à Rockstar Games.</p>
+<p>Rumores e informações não confirmadas devem sempre ser identificados como tais.</p>
+</main>
+
+<footer>
+GTA NEWS BRASIL © <span id="ano"></span><br>
+Projeto independente. Marcas pertencem aos seus respectivos proprietários.
+</footer>
+
+<script>
+const noticias=[
+{
+categoria:"GTA 6",
+status:"Informativo",
+titulo:{
+pt:"Acompanhe as novidades de GTA 6",
+en:"Follow GTA 6 news",
+es:"Sigue las novedades de GTA 6"
+},
+texto:{
+pt:"Esta seção reunirá notícias e atualizações sobre o próximo capítulo da franquia. Consulte sempre as fontes oficiais.",
+en:"This section will collect news and updates about the next chapter of the franchise. Always check official sources.",
+es:"Esta sección reunirá noticias y actualizaciones del próximo capítulo de la franquicia. Consulta siempre las fuentes oficiales."
+},
+link:"https://www.rockstargames.com/VI"
+},
+{
+categoria:"GTA Online",
+status:"Informativo",
+titulo:{
+pt:"Novidades de GTA Online",
+en:"GTA Online updates",
+es:"Novedades de GTA Online"
+},
+texto:{
+pt:"Aqui você encontrará informações sobre atualizações, eventos e novidades do modo online.",
+en:"Here you will find information about updates, events and online mode news.",
+es:"Aquí encontrarás información sobre actualizaciones, eventos y novedades del modo online."
+},
+link:"https://www.rockstargames.com/gta-online"
+},
+{
+categoria:"GTA 5",
+status:"Informativo",
+titulo:{
+pt:"Tudo sobre GTA 5",
+en:"Everything about GTA 5",
+es:"Todo sobre GTA 5"
+},
+texto:{
+pt:"Notícias, informações e conteúdos relacionados a Grand Theft Auto V.",
+en:"News, information and content related to Grand Theft Auto V.",
+es:"Noticias, información y contenido relacionado con Grand Theft Auto V."
+},
+link:"https://www.rockstargames.com/gta-v"
+},
+{
+categoria:"Rockstar",
+status:"Fonte oficial",
+titulo:{
+pt:"Acompanhe a Rockstar Games",
+en:"Follow Rockstar Games",
+es:"Sigue a Rockstar Games"
+},
+texto:{
+pt:"Confira os comunicados e anúncios diretamente nos canais oficiais da desenvolvedora.",
+en:"Check announcements directly through the developer's official channels.",
+es:"Consulta los anuncios directamente en los canales oficiales de la desarrolladora."
+},
+link:"https://www.rockstargames.com/newswire"
+}
+];
+
+let categoriaAtual="Todos";
+let idiomaAtual="pt";
+
+function filtrar(categoria,botao){
+categoriaAtual=categoria;
+document.querySelectorAll(".filters button").forEach(b=>b.classList.remove("active"));
+botao.classList.add("active");
+renderizar();
+}
+
+function mudarIdioma(){
+idiomaAtual=document.getElementById("idioma").value;
+document.getElementById("titulo").textContent={
+pt:"Últimas notícias",en:"Latest news",es:"Últimas noticias"
+}[idiomaAtual];
+document.getElementById("busca").placeholder={
+pt:"Pesquisar notícias...",en:"Search news...",es:"Buscar noticias..."
+}[idiomaAtual];
+renderizar();
+}
+
+function renderizar(){
+const busca=document.getElementById("busca").value.toLowerCase();
+const lista=document.getElementById("lista");
+const filtradas=noticias.filter(n=>{
+const texto=n.titulo[idiomaAtual]+" "+n.texto[idiomaAtual]+" "+n.categoria;
+return(categoriaAtual==="Todos"||n.categoria===categoriaAtual)&&texto.toLowerCase().includes(busca);
+});
+
+lista.innerHTML=filtradas.map(n=>`
+<article class="card">
+<small>${n.categoria} · ${n.status}</small>
+<h3>${n.titulo[idiomaAtual]}</h3>
+<p>${n.texto[idiomaAtual]}</p>
+<a href="${n.link}" target="_blank" rel="noopener noreferrer">Ver fonte oficial ↗</a>
+</article>
+`).join("");
+
+if(!filtradas.length){
+lista.innerHTML="<p>Nenhum resultado encontrado.</p>";
+}
+}
+
+document.getElementById("ano").textContent=new Date().getFullYear();
+renderizar();
+</script>
+</body>
+  </html>
+  
